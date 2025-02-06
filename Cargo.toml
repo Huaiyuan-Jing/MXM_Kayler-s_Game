@@ -6,3 +6,5 @@ edition = "2021"
 [dependencies]
 
 petgraph = "0.6"
+rayon = "1.5"
+dashmap = "5.4"
