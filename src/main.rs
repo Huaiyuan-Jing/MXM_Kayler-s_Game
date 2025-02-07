@@ -7,8 +7,8 @@ use dashmap::DashMap;
 
 fn main() {
     let mut grundy_cache = DashMap::new();
-    for i in 1..=10 {
-        for j in 1..=10 {
+    for i in 1..=6 {
+        for j in 1..=6 {
             test_m_n(i, j, &mut grundy_cache);
         }
     }
