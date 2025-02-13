@@ -10,7 +10,7 @@ pub fn graph_hash(g: &Graph<(), (), Undirected>) -> u64 {
         labels.insert(n, degree);
     }
 
-    for _round in 0..5 {
+    for _round in 0..10 {
         let mut new_labels: HashMap<NodeIndex, u64> = HashMap::new();
         for n in g.node_indices() {
             let current_label = labels[&n];
