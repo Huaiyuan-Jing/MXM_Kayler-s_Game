@@ -2,9 +2,7 @@ pub mod graph_hash;
 pub mod grundy;
 pub mod parallel_grundy;
 pub mod grundy_cache;
-use dashmap::DashMap;
 use petgraph::graph::Graph;
-use std::collections::HashMap;
 
 fn main() {
     let mut grundy_cache = grundy_cache::GrundyCache::new();

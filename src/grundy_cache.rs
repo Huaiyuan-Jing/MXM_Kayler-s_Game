@@ -19,10 +19,14 @@ impl GrundyCache {
         if !self.cache.contains_key(&key) {
             self.cache.insert(key, Vec::new());
         }
-        for node in self.cache.get_mut(&key).unwrap().iter_mut() {
+        for node in self.cache.get_mut(&key).unwrap().iter() {
             if petgraph::algo::is_isomorphic(&node.g, &g) {
                 if grundy != node.grundy {
-                    panic!("Problem: Same graph but different grundy");
+                    panic!(
+                        "Problem: Same graph but different grundy. Nodes: {}, Edges: {}",
+                        g.node_count(),
+                        g.edge_count()
+                    );
                 }
                 return;
             }
