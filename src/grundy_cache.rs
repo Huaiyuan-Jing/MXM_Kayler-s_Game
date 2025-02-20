@@ -23,9 +23,11 @@ impl GrundyCache {
             if petgraph::algo::is_isomorphic(&node.g, &g) {
                 if grundy != node.grundy {
                     panic!(
-                        "Problem: Same graph but different grundy. Nodes: {}, Edges: {}",
+                        "Problem: Same graph but different grundy. Nodes: {}, Edges: {}, Grundy: {}, {}",
                         g.node_count(),
-                        g.edge_count()
+                        g.edge_count(),
+                        grundy,
+                        node.grundy
                     );
                 }
                 return;
@@ -38,13 +40,23 @@ impl GrundyCache {
     }
     pub fn get(&self, g: &Graph<(), (), petgraph::Undirected>) -> i64 {
         let key = graph_hash(g);
-        if self.cache.contains_key(&key) {
-            for node in self.cache.get(&key).unwrap().iter() {
-                if petgraph::algo::is_isomorphic(&node.g, g) {
-                    return node.grundy as i64;
-                }
+        if !self.cache.contains_key(&key) {
+            return -1;
+        }
+        for node in self.cache.get(&key).unwrap().iter() {
+            if petgraph::algo::is_isomorphic(&node.g, g) {
+                return node.grundy as i64;
             }
         }
         -1
+    }
+    pub fn collision_rate(&self) -> f64 {
+        let mut total = 0;
+        let mut collisions = 0;
+        for node in self.cache.iter() {
+            total += node.value().len();
+            collisions += 1;
+        }
+        total as f64 / collisions as f64
     }
 }

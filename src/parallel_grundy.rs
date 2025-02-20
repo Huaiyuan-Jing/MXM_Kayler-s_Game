@@ -36,13 +36,6 @@ pub fn grundy(g: &Graph<(), (), petgraph::Undirected>, grundy_cache: &GrundyCach
         .map(|edge| {
             let mut tmp = g.clone();
             tmp.remove_edge(edge);
-            let nodes_to_remove: Vec<_> = tmp
-                .node_indices()
-                .filter(|&node| tmp.neighbors(node).count() == 0)
-                .collect();
-            for node in nodes_to_remove {
-                tmp.remove_node(node);
-            }
             grundy(&tmp, grundy_cache)
         })
         .collect();
@@ -55,13 +48,6 @@ pub fn grundy(g: &Graph<(), (), petgraph::Undirected>, grundy_cache: &GrundyCach
         .map(|node| {
             let mut tmp = g.clone();
             tmp.remove_node(node);
-            let nodes_to_remove: Vec<_> = tmp
-                .node_indices()
-                .filter(|&n| tmp.neighbors(n).count() == 0)
-                .collect();
-            for n in nodes_to_remove {
-                tmp.remove_node(n);
-            }
             grundy(&tmp, grundy_cache)
         })
         .collect();
