@@ -29,7 +29,7 @@ impl GrundyCache {
                         node.g.edge_count(),
                         g.edge_count(),
                         grundy,
-                        node.grundy
+                        node.grundy,
                     );
                 }
                 return;
