@@ -23,8 +23,10 @@ impl GrundyCache {
             if petgraph::algo::is_isomorphic(&node.g, &g) {
                 if grundy != node.grundy {
                     panic!(
-                        "Problem: Same graph but different grundy. Nodes: {}, Edges: {}, Grundy: {}, {}",
+                        "Problem: Same graph but different grundy. Nodes:  {}, {}, Edges: {}, {}, Grundy: {}, {}",
+                        node.g.node_count(),
                         g.node_count(),
+                        node.g.edge_count(),
                         g.edge_count(),
                         grundy,
                         node.grundy

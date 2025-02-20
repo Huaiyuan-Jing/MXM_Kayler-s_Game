@@ -6,9 +6,12 @@ use petgraph::graph::Graph;
 
 fn main() {
     let mut grundy_cache = grundy_cache::GrundyCache::new();
-    for j in 1..=12 {
-        test_complete_graph(j, &mut grundy_cache);
+    for i in 1..=10 {
+        for j in 1..=(30 / i) {
+            test_m_n(i, j, &mut grundy_cache);        
+        }
     }
+    println!("collision rate is {}%", (grundy_cache.collision_rate() - 1.0) * 100.0);
 }
 
 fn test_complete_graph(n: usize, grundy_cache: &mut grundy_cache::GrundyCache) {
@@ -26,7 +29,7 @@ fn test_complete_graph(n: usize, grundy_cache: &mut grundy_cache::GrundyCache) {
     println!(
         "grundy of complete graph of size {} is {}",
         n,
-        parallel_grundy::grundy(&graph, grundy_cache)
+        grundy::grundy(&graph, grundy_cache)
     );
 }
 
@@ -51,6 +54,6 @@ fn test_m_n(m: usize, n: usize, grundy_cache: &mut grundy_cache::GrundyCache) {
         "grundy of K_{}_{} is {}",
         m,
         n,
-        parallel_grundy::grundy(&graph, grundy_cache)
+        grundy::grundy(&graph, grundy_cache)
     );
 }
