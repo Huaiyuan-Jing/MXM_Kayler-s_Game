@@ -1,6 +1,6 @@
 use crate::graph_hash::graph_hash;
-use petgraph::graph::Graph;
 use dashmap::DashMap;
+use petgraph::graph::Graph;
 struct CacheNode {
     g: Graph<(), (), petgraph::Undirected>,
     grundy: u64,
@@ -27,7 +27,10 @@ impl GrundyCache {
                 return;
             }
         }
-        self.cache.get_mut(&key).unwrap().push(CacheNode { g, grundy });
+        self.cache
+            .get_mut(&key)
+            .unwrap()
+            .push(CacheNode { g, grundy });
     }
     pub fn get(&self, g: &Graph<(), (), petgraph::Undirected>) -> i64 {
         let key = graph_hash(g);
