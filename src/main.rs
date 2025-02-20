@@ -1,18 +1,19 @@
 pub mod graph_hash;
 pub mod grundy;
 pub mod parallel_grundy;
+pub mod grundy_cache;
 use dashmap::DashMap;
 use petgraph::graph::Graph;
 use std::collections::HashMap;
 
 fn main() {
-    let mut grundy_cache = DashMap::new();
+    let mut grundy_cache = grundy_cache::GrundyCache::new();
     for j in 1..=12 {
         test_complete_graph(j, &mut grundy_cache);
     }
 }
 
-fn test_complete_graph(n: usize, grundy_cache: &mut DashMap<u64, u64>) {
+fn test_complete_graph(n: usize, grundy_cache: &mut grundy_cache::GrundyCache) {
     let mut nodes = Vec::new();
     let mut graph: Graph<(), (), petgraph::Undirected> = Graph::new_undirected();
     for _ in 0..n {
@@ -31,24 +32,7 @@ fn test_complete_graph(n: usize, grundy_cache: &mut DashMap<u64, u64>) {
     );
 }
 
-fn test_path(n: usize, grundy_cache: &mut HashMap<u64, u64>) {
-    let mut nodes = Vec::new();
-    let mut graph: Graph<(), (), petgraph::Undirected> = Graph::new_undirected();
-    for _ in 0..n {
-        let node = graph.add_node(());
-        nodes.push(node);
-    }
-    for i in 0..n - 1 {
-        graph.add_edge(nodes[i], nodes[i + 1], ());
-    }
-    println!(
-        "grundy of path of length {} is {}",
-        n,
-        grundy::grundy(&graph, grundy_cache)
-    );
-}
-
-fn test_m_n(m: usize, n: usize, grundy_cache: &mut DashMap<u64, u64>) {
+fn test_m_n(m: usize, n: usize, grundy_cache: &mut grundy_cache::GrundyCache) {
     let mut n_nodes = Vec::new();
     let mut m_nodes = Vec::new();
     let mut graph: Graph<(), (), petgraph::Undirected> = Graph::new_undirected();

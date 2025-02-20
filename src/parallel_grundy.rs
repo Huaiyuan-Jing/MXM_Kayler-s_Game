@@ -1,12 +1,11 @@
-use crate::graph_hash::graph_hash;
 use petgraph::graph::Graph;
 use std::collections::HashSet;
 use rayon::prelude::*;
-use dashmap::DashMap;
+use crate::grundy_cache::GrundyCache;
 
 pub fn grundy(
     g: &Graph<(), (), petgraph::Undirected>,
-    grundy_cache: &DashMap<u64, u64>,
+    grundy_cache: &GrundyCache,
 ) -> u64 {
     if g.edge_count() == 0 {
         return 0;
@@ -14,9 +13,9 @@ pub fn grundy(
     if g.edge_count() == 1 {
         return 1;
     }
-    let hash = graph_hash(g);
-    if let Some(value) = grundy_cache.get(&hash) {
-        return *value;
+    let tmp = grundy_cache.get(&g);
+    if tmp != -1 {
+        return tmp as u64;
     }
 
     let mut rev_mex = HashSet::new();
@@ -50,6 +49,6 @@ pub fn grundy(
     rev_mex.extend(node_results);
 
     let mex = (0..).find(|&m| !rev_mex.contains(&m)).unwrap();
-    grundy_cache.insert(hash, mex);
+    grundy_cache.insert(g.clone(), mex);
     mex
 }
