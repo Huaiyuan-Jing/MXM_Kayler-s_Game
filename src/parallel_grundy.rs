@@ -55,6 +55,6 @@ pub fn grundy(g: &Graph<(), (), petgraph::Undirected>, grundy_cache: &GrundyCach
     rev_mex.extend(node_results);
 
     let mex = (0..).find(|&m| !rev_mex.contains(&m)).unwrap();
-    grundy_cache.insert(g.clone(), mex);
+    grundy_cache.insert(&g, mex);
     mex
 }

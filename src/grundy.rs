@@ -39,6 +39,6 @@ pub fn grundy(g: &Graph<(), (), petgraph::Undirected>, grundy_cache: &mut Grundy
     while rev_mex.contains(&mex) {
         mex += 1;
     }
-    grundy_cache.insert(g, mex);
+    grundy_cache.insert(&g, mex);
     mex
 }

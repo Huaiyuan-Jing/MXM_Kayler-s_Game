@@ -14,7 +14,8 @@ impl GrundyCache {
             cache: DashMap::new(),
         }
     }
-    pub fn insert(&self, g: Graph<(), (), petgraph::Undirected>, grundy: u64) {
+    pub fn insert(&self, g: &Graph<(), (), petgraph::Undirected>, grundy: u64) {
+        let g = g.clone();
         let key = graph_hash(&g);
         if !self.cache.contains_key(&key) {
             self.cache.insert(key, Vec::new());
@@ -36,7 +37,7 @@ impl GrundyCache {
             }
         }
         self.cache.get_mut(&key).unwrap().push(CacheNode {
-            g: g.clone(),
+            g,
             grundy,
         });
     }
