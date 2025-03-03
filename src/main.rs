@@ -6,8 +6,8 @@ use petgraph::graph::Graph;
 
 fn main() {
     let mut grundy_cache = grundy_cache::GrundyCache::new();
-    for i in 4..=4 {
-        for j in 1..=8 {
+    for i in 5..=5 {
+        for j in 1..=7 {
             test_m_n(i, j, &mut grundy_cache);
         }
     }
