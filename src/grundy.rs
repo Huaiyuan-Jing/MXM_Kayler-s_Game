@@ -5,11 +5,11 @@ use std::collections::HashSet;
 fn remove_isolated_nodes(
     g: &Graph<(), (), petgraph::Undirected>,
 ) -> Graph<(), (), petgraph::Undirected> {
-    let nodes_to_remove: Vec<_> = g
+    let mut tmp = g.clone();
+    let nodes_to_remove: Vec<_> = tmp
         .node_indices()
         .filter(|&node| g.neighbors(node).count() == 0)
         .collect();
-    let mut tmp = g.clone();
     for node in nodes_to_remove {
         tmp.remove_node(node);
     }

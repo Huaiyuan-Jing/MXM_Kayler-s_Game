@@ -1,14 +1,14 @@
 pub mod graph_hash;
 pub mod grundy;
-pub mod parallel_grundy;
 pub mod grundy_cache;
+pub mod parallel_grundy;
 use petgraph::graph::Graph;
 
 fn main() {
     let mut grundy_cache = grundy_cache::GrundyCache::new();
     for i in 1..=3 {
         for j in 1..=11 {
-            test_m_n(i, j, &mut grundy_cache);        
+            test_m_n(i, j, &mut grundy_cache);
         }
     }
     println!("collision rate is {}%", grundy_cache.collision_rate());

@@ -2,7 +2,6 @@ use petgraph::graph::{Graph, NodeIndex};
 use petgraph::Undirected;
 use std::collections::HashMap;
 
-
 pub fn graph_hash(g: &Graph<(), (), Undirected>) -> u64 {
     let mut labels: HashMap<NodeIndex, u64> = HashMap::new();
     for n in g.node_indices() {
@@ -14,9 +13,7 @@ pub fn graph_hash(g: &Graph<(), (), Undirected>) -> u64 {
         let mut new_labels: HashMap<NodeIndex, u64> = HashMap::new();
         for n in g.node_indices() {
             let current_label = labels[&n];
-            let mut nbr_labels: Vec<u64> = g.neighbors(n)
-                .map(|nbr| labels[&nbr])
-                .collect();
+            let mut nbr_labels: Vec<u64> = g.neighbors(n).map(|nbr| labels[&nbr]).collect();
             nbr_labels.sort();
             let mut hash_val = 1469598103934665603u64; // FNV offset basis
             hash_val ^= current_label;
