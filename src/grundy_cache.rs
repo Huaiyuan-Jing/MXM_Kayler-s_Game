@@ -59,6 +59,6 @@ impl GrundyCache {
             total += node.value().len();
             collisions += 1;
         }
-        total as f64 / collisions as f64
+        (total as f64 / collisions as f64 - 1.0) * 100.0
     }
 }

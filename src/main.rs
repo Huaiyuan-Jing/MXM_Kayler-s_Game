@@ -6,12 +6,12 @@ use petgraph::graph::Graph;
 
 fn main() {
     let mut grundy_cache = grundy_cache::GrundyCache::new();
-    for i in 1..=10 {
-        for j in 1..=(35 / i) {
+    for i in 1..=3 {
+        for j in 1..=11 {
             test_m_n(i, j, &mut grundy_cache);        
         }
     }
-    println!("collision rate is {}%", (grundy_cache.collision_rate() - 1.0) * 100.0);
+    println!("collision rate is {}%", grundy_cache.collision_rate());
 }
 
 // fn test_complete_graph(n: usize, grundy_cache: &mut grundy_cache::GrundyCache) {
