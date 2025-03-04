@@ -3,12 +3,15 @@ use petgraph::graph::Graph;
 use rayon::prelude::*;
 use std::collections::HashSet;
 
-fn remove_isolated_nodes(g: &Graph<(), (), petgraph::Undirected>) -> Graph<(), (), petgraph::Undirected>{ 
-    let nodes_to_remove: Vec<_> = g
+fn remove_isolated_nodes(
+    g: &Graph<(), (), petgraph::Undirected>,
+) -> Graph<(), (), petgraph::Undirected> {
+    let mut nodes_to_remove: Vec<_> = g
         .node_indices()
         .filter(|&node| g.neighbors(node).count() == 0)
         .collect();
     let mut tmp = g.clone();
+    nodes_to_remove.reverse();
     for node in nodes_to_remove {
         tmp.remove_node(node);
     }
@@ -57,4 +60,33 @@ pub fn grundy(g: &Graph<(), (), petgraph::Undirected>, grundy_cache: &GrundyCach
     let mex = (0..).find(|&m| !rev_mex.contains(&m)).unwrap();
     grundy_cache.insert(&g, mex);
     mex
+}
+
+#[test]
+fn test_remove_isolated_nodes_1() {
+    let mut graph: Graph<(), (), petgraph::Undirected> = Graph::new_undirected();
+    for _ in 0..10 {
+        graph.add_node(());
+    }
+    let g = remove_isolated_nodes(&graph);
+    for node in g.node_indices() {
+        print!("{}: {} neighbors", node.index(), g.neighbors(node).count());
+    }
+    println!("");
+    assert_eq!(g.node_count(), 0);
+}
+#[test]
+fn test_remove_isolated_nodes_2() {
+    let mut graph: Graph<(), (), petgraph::Undirected> = Graph::new_undirected();
+    let mut nodes = vec![];
+    for _ in 0..10 {
+        nodes.push(graph.add_node(()));
+    }
+    graph.add_edge(nodes[0], nodes[1], ());
+    let g = remove_isolated_nodes(&graph);
+    for node in g.node_indices() {
+        print!("{}: {} neighbors", node.index(), g.neighbors(node).count());
+    }
+    println!("");
+    assert_eq!(g.node_count(), 2);
 }
