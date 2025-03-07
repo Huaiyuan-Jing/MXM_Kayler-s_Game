@@ -20,6 +20,7 @@ pub fn grundy(
     g: &Graph<(), (), petgraph::Undirected>,
     grundy_cache: &mut GrundyCache,
     show: bool,
+    depth: i32,
 ) -> u64 {
     let g = remove_isolated_nodes(g);
     if g.edge_count() == 0 {
@@ -33,7 +34,7 @@ pub fn grundy(
     for edge in g.edge_indices() {
         let mut tmp = g.clone();
         tmp.remove_edge(edge);
-        rev_mex.insert(grundy(&tmp, grundy_cache, show));
+        rev_mex.insert(grundy(&tmp, grundy_cache, show, depth + 1));
     }
     for node in g.node_indices() {
         let mut tmp = g.clone();
@@ -41,7 +42,7 @@ pub fn grundy(
             continue;
         }
         tmp.remove_node(node);
-        rev_mex.insert(grundy(&tmp, grundy_cache, show));
+        rev_mex.insert(grundy(&tmp, grundy_cache, show, depth + 1));
     }
     let mut mex = 0;
     while rev_mex.contains(&mex) {
@@ -50,7 +51,8 @@ pub fn grundy(
     grundy_cache.insert(&g, mex);
     if show {
         println!(
-            "Node numbers {}, Edge numbers {}",
+            "Depth: {}, Node numbers {}, Edge numbers {}",
+            depth,
             g.node_count(),
             g.edge_count()
         );

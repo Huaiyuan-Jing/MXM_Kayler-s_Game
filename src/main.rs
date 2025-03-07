@@ -6,8 +6,8 @@ use petgraph::graph::Graph;
 
 fn main() {
     let mut grundy_cache = grundy_cache::GrundyCache::new();
-    for n in 4..=4 {
-        for m in 8..=8 {
+    for n in 3..=3 {
+        for m in 5..=5 {
             let mut n_nodes = Vec::new();
             let mut m_nodes = Vec::new();
             let mut graph: Graph<(), (), petgraph::Undirected> = Graph::new_undirected();
@@ -21,6 +21,9 @@ fn main() {
             }
             for i in 0..m {
                 for j in 0..n {
+                    if i == 0 && j == 0 {
+                        continue;
+                    }
                     graph.add_edge(m_nodes[i], n_nodes[j], ());
                 }
             }
@@ -28,7 +31,7 @@ fn main() {
                 "grundy of K_{}_{} is {}",
                 n,
                 m,
-                parallel_grundy::grundy(&graph, &mut grundy_cache)
+                grundy::grundy(&graph, &mut grundy_cache, true, 0)
             );
         }
     }
