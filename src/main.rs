@@ -21,9 +21,6 @@ fn main() {
             }
             for i in 0..m {
                 for j in 0..n {
-                    if i == 0 && j == 0 {
-                        continue;
-                    }
                     graph.add_edge(m_nodes[i], n_nodes[j], ());
                 }
             }

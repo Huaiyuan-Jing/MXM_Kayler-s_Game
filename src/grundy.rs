@@ -49,7 +49,7 @@ pub fn grundy(
         mex += 1;
     }
     grundy_cache.insert(&g, mex);
-    if show {
+    if show && mex == 0{
         println!(
             "Depth: {}, Node numbers {}, Edge numbers {}",
             depth,
