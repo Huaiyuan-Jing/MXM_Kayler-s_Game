@@ -1,7 +1,7 @@
 use crate::grundy_cache::GrundyCache;
 use petgraph::graph::Graph;
 use std::collections::HashSet;
-use std::fs::{File, OpenOptions};
+use std::fs::OpenOptions;
 use std::io::Write;
 
 fn remove_isolated_nodes(
