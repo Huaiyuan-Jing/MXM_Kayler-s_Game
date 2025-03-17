@@ -2,6 +2,7 @@ pub mod graph_hash;
 pub mod grundy;
 pub mod grundy_cache;
 pub mod parallel_grundy;
+pub mod complete_bipatite_grundy;
 use petgraph::graph::Graph;
 
 fn main() {
