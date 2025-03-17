@@ -36,10 +36,10 @@ impl GrundyCache {
                 return;
             }
         }
-        self.cache.get_mut(&key).unwrap().push(CacheNode {
-            g,
-            grundy,
-        });
+        self.cache
+            .get_mut(&key)
+            .unwrap()
+            .push(CacheNode { g, grundy });
     }
     pub fn get(&self, g: &Graph<(), (), petgraph::Undirected>) -> i64 {
         let key = graph_hash(g);
